@@ -1,0 +1,234 @@
+import React, { useState } from 'react';
+
+export default function NFARiskHub() {
+  const [activeTab, setActiveTab] = useState('abook');
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  const toolsByTab = {
+    trading: [
+      {
+        title: "OKX Perps Vol Tracker",
+        description: "Track and analyze perpetual futures volume data from OKX exchange.",
+        url: "https://okx-sym-vol30-day-dq9c.vercel.app/"
+      },
+      {
+        title: "Coin Analysis",
+        description: "Analyze cryptocurrency performance and trading patterns with detailed metrics.",
+        url: "https://claude.ai/public/artifacts/40a3bcac-a65a-42b1-a43c-38c85107f806"
+      },
+      {
+        title: "Sharp flow analysis",
+        description: "Analyze sharp trading flows and market movements with detailed metrics and visualizations.",
+        url: "https://claude.ai/public/artifacts/7076071c-5c91-424b-a670-9064e668b4d1"
+      },
+      {
+        title: "Risk Analysis",
+        description: "Comprehensive risk assessment tool for portfolio and position analysis.",
+        url: "https://claude.ai/public/artifacts/09a7f525-6133-4f9e-bdcb-4e18730a1b7e"
+      },
+      {
+        title: "Trading Statistics",
+        description: "Detailed trading statistics and performance metrics dashboard.",
+        url: "https://claude.ai/public/artifacts/fe550e56-70dd-4b55-82c9-826296dbdb47"
+      }
+    ],
+    user: [
+      {
+        title: "Trading Analysis - Single Trader",
+        description: "Deep-dive analysis of individual trader performance, patterns, and statistics.",
+        url: "https://claude.ai/public/artifacts/d2a7f196-7e54-4577-8613-d4a8659b8945"
+      },
+      {
+        title: "Account Performance Analysis",
+        description: "Analyze individual account performance with comprehensive metrics and insights.",
+        url: "https://claude.ai/public/artifacts/d7a409bb-fcb5-4f71-8a1c-5f51a321433f"
+      },
+      {
+        title: "Copy Trading / Hedging Detection",
+        description: "Detect copy trading patterns and hedging strategies across accounts.",
+        url: "https://claude.ai/public/artifacts/f99b8d35-9f18-4007-b6c1-ee874c158bc8"
+      }
+    ],
+    abook: [
+      {
+        title: "OKX Open Positions",
+        description: "Monitor and analyze open positions across OKX exchange in real-time.",
+        url: "https://okx-api.vercel.app/"
+      },
+      {
+        title: "Collateral Check",
+        description: "Verify and analyze collateral requirements and coverage across positions.",
+        url: "https://risk-dashboard-blush.vercel.app/"
+      },
+      {
+        title: "HFT Analysis",
+        description: "High-frequency trading analysis tool with pivot tables and visualizations.",
+        url: "https://claude.ai/public/artifacts/87b4d5d5-d3a2-4fa3-a2f8-f83f45bba6a0"
+      },
+      {
+        title: "Leverage Tier Analysis",
+        description: "Analyze leverage tier configurations and identify discrepancies.",
+        url: "https://claude.ai/public/artifacts/1f1e2c1c-a787-496f-a6f5-10719cfb4a94"
+      },
+      {
+        title: "Long to Short Ratio Analysis",
+        description: "Calculate and track Long/Short ratios from DX Trading data exports.",
+        url: "https://claude.ai/public/artifacts/28a8d5d0-18fd-455c-8652-22d5e933b884"
+      },
+      {
+        title: "Net Open Positions Analysis: DX vs OKX",
+        description: "Position reconciliation dashboard comparing DX and OKX exchange holdings.",
+        url: "https://dxokxopenposrec.vercel.app/"
+      },
+      {
+        title: "Trade-For-Trade Reconciliation",
+        description: "Trade reconciliation tool between OKX and DX data sources.",
+        url: "https://claude.ai/public/artifacts/557d5037-ee63-4352-b547-61a43c0f8312"
+      },
+      {
+        title: "Notional Weighted Averages For Symbols",
+        description: "Calculate weighted average prices and metrics for trading symbols.",
+        url: "https://claude.ai/public/artifacts/d8400018-a379-4fe1-b280-4c4d63b4c5e6"
+      },
+      {
+        title: "Trading Performance Analyzer",
+        description: "Comprehensive trading performance analysis with detailed visualizations.",
+        url: "https://claude.ai/public/artifacts/2e7c7dbd-192e-47d2-ac4b-b5648d248e33"
+      },
+      {
+        title: "Trading P&L Commission Analyzer",
+        description: "Analyze trading profit & loss with commission tracking and reporting.",
+        url: "https://claude.ai/public/artifacts/a616efc7-e8e3-48e2-9240-cee66585b3eb"
+      }
+    ]
+  };
+
+  const tabs = [
+    { id: 'abook', label: 'A-Book Analysis' },
+    { id: 'trading', label: 'Trading Performance Analysis' },
+    { id: 'user', label: 'User Level Analysis' }
+  ];
+
+  const filteredTools = toolsByTab[activeTab].filter(tool =>
+    tool.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6 md:p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-4 tracking-tight">
+            NFA RISK HUB
+          </h1>
+          
+          {/* Documentation Button */}
+          <a
+            href="https://docs.google.com/document/d/12BY-BUHJkwiUYZmbJcsGee4v9Sq8CMQgM4HTBAapKxI/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/30 mb-6"
+          >
+            Risk Tools Documentation
+          </a>
+          
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-6">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search tools by name..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-5 py-3 pl-12 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              />
+              <svg 
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Browser-style Tabs */}
+          <div className="flex gap-1 mb-6 max-w-4xl mx-auto">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => {
+                  setActiveTab(tab.id);
+                  setSearchQuery('');
+                }}
+                className={`px-6 py-3 font-medium transition-all duration-200 relative ${
+                  activeTab === tab.id
+                    ? 'bg-slate-800 text-white rounded-t-lg'
+                    : 'bg-slate-800/30 text-slate-400 hover:bg-slate-800/50 hover:text-slate-300 rounded-t-lg'
+                }`}
+              >
+                {tab.label}
+                {activeTab === tab.id && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"></div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Tools Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredTools.map((tool, index) => (
+            <a
+              key={index}
+              href={tool.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-800/50 backdrop-blur border border-slate-700 rounded-lg p-5 hover:bg-slate-800 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 cursor-pointer block"
+            >
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-lg font-semibold text-slate-100 leading-tight pr-2 group-hover:text-blue-300 transition-colors">
+                  {tool.title}
+                </h3>
+                <svg 
+                  className="w-5 h-5 text-slate-500 group-hover:text-blue-400 flex-shrink-0 transition-colors" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </div>
+              
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                {tool.description}
+              </p>
+              
+              <div className="flex items-center text-blue-400 text-sm font-medium group-hover:text-blue-300 transition-colors">
+                Open Tool
+                <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* No results message */}
+        {filteredTools.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-slate-400 text-lg">No tools found matching "{searchQuery}"</p>
+          </div>
+        )}
+
+        {/* Footer */}
+        <div className="text-center mt-16 pt-8 border-t border-slate-700">
+          <p className="text-slate-500 text-sm">
+            NFA Risk Hub • Click any card to open in a new tab
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
